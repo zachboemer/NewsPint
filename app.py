@@ -1,7 +1,17 @@
+import os
+import psycopg2
+
+from dotenv import load_dotenv
 from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
+from newsapi import NewsApiClient
 
+load_dotenv()
+db_url = os.environ['DATABASE_URL']
+conn = psycopg2.connect(db_url, sslmode='require')
 
+api_key = os.environ['API_KEY']
+newsapi = NewsApiClient(api_key)
 
 app = Flask(__name__)
 
