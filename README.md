@@ -1,0 +1,2 @@
+# NewsPint
+Basic news aggregator 
