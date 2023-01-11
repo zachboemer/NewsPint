@@ -8,7 +8,7 @@ from datetime import datetime, time, timedelta
 # loads .env variables
 load_dotenv()
 # setting up connection to NewsAPI
-api_key = os.environ['API_KEY']
+api_key = os.environ['NEWS_API_KEY']
 newsapi = NewsApiClient(api_key=api_key)
 
 # setting up connection to our DB
