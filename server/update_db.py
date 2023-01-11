@@ -29,7 +29,7 @@ formattedYesterdayDatetime = yesterdayDatetime.isoformat()
 response = newsapi.get_everything(
     q='esports', from_param=formattedYesterdayDatetime, to=formattedTodayDatetime, language='en', sort_by='popularity')
 
-
+numOfArticlesSelected = 0
 for article in response['articles']:
     source_name = article['source']['name']
     title = article['title']
@@ -51,5 +51,8 @@ for article in response['articles']:
             (source_name, title, author, publish_date,
              retrieval_date, url, image_url, summary)
         )
+        numOfArticlesSelected += 1
+        if (numOfArticlesSelected > 1):
+            break
 conn.commit()  # this line actually sends the commands to the DB to execute
 conn.close()  # closes connection so that we dont have any leaks
