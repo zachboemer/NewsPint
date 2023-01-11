@@ -10,13 +10,12 @@ load_dotenv()
 db_url = os.environ['DATABASE_URL']
 conn = psycopg2.connect(db_url, sslmode='require')
 
-app = Flask(__name__, static_folder='../client/news-pint/build',
-            static_url_path='/')
+app = Flask(__name__)
 
 
 @app.route('/')
 def index():
-    return app.send_static_file('index.html')
+    return 'yoo'
 
 # more routes here
 
