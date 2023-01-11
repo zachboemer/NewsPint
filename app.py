@@ -10,7 +10,7 @@ load_dotenv()
 db_url = os.environ['DATABASE_URL']
 conn = psycopg2.connect(db_url, sslmode='require')
 
-app = Flask(__name__, static_folder='../client/news-pint/build',
+app = Flask(__name__, static_folder='client/news-pint/build',
             static_url_path='/')
 
 
