@@ -13,7 +13,7 @@ client/news-pint/build
 
 # misc
 .DS_Store
-.env
+.env*
 .vscode
 __pycache__
 package-lock.json
