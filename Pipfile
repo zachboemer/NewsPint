@@ -9,6 +9,7 @@ psycopg2-binary = "*"
 flask-sqlalchemy = "*"
 gunicorn = "*"
 python-dotenv = "*"
+newsapi-python = "*"
 
 [dev-packages]
 
