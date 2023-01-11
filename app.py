@@ -10,16 +10,15 @@ load_dotenv()
 db_url = os.environ['DATABASE_URL']
 conn = psycopg2.connect(db_url, sslmode='require')
 
-api_key = os.environ['API_KEY']
-newsapi = NewsApiClient(api_key)
-
 app = Flask(__name__)
+
 
 @app.route('/')
 def index():
     return render_template('index.html')
 
-#more routes here
+# more routes here
+
 
 if __name__ == '__main__':
     app.run()
