@@ -1,13 +1,16 @@
 import os
+import psycopg2
 from dotenv import load_dotenv
 from flask import Flask, render_template, request, jsonify
-from flask_sqlalchemy import SQLAlchemy
-from models import db, Article
+from models import Article, db
+
+# from models import db, Article
 # from newsapi import NewsApiClient
 
 load_dotenv()
+
 app = Flask(__name__)
-db_url = os.environ['DATABASE_URL']
+# db_url = os.environ['DATABASE_URL']
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 db.init_app(app)
 
@@ -22,5 +25,4 @@ def get_articles():
 
 
 if __name__ == '__main__':
-    app.run()
     app.run()

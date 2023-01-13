@@ -5,11 +5,12 @@ name = "pypi"
 
 [packages]
 flask = "*"
-psycopg2-binary = "*"
 flask-sqlalchemy = "*"
 gunicorn = "*"
 python-dotenv = "*"
 newsapi-python = "*"
+sqlalchemy = "*"
+psycopg2-binary = "*"
 
 [dev-packages]
 
