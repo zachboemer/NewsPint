@@ -2,6 +2,7 @@ import os
 import psycopg2
 from dotenv import load_dotenv
 from flask import Flask, render_template, request, jsonify
+from flask_cors import CORS
 from models import Article, db
 
 load_dotenv()
@@ -10,7 +11,9 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL'].replace(
     'postgres://', 'postgresql://', 1)
 db.init_app(app)
 
+
 # do some cors
+CORS(app)
 # do some jwt
 
 # -------- ROUTES ---------
