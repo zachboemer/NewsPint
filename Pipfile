@@ -11,7 +11,7 @@ python-dotenv = "*"
 newsapi-python = "*"
 sqlalchemy = "*"
 psycopg2-binary = "*"
-cors = "*"
+flask-cors = "*"
 
 [dev-packages]
 
