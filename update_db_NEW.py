@@ -36,6 +36,7 @@ def main():
     # from param
     yesterdayDatetime = todayDatetime - timedelta(days=1)
     formattedYesterdayDatetime = yesterdayDatetime.isoformat()
+
     # gets comma seperated list of sources of each category
     for category in categories:
         domains.append(sourceListToString(newsapi.get_sources(category=category,
@@ -51,6 +52,7 @@ def main():
             sort_by='popularity',
             page_size=10
         )
+
         # just adds the first two articles in the response
         for article in response['articles']:
             if numOfArticlesAddedOfCategory == 2:
@@ -81,6 +83,7 @@ def main():
                 break
             articlesToAdd.append(article)
             numOfArticlesAdded += 1
+
     # traverse through articlesToAdd, and then insert one by one into articles table
     for article in articlesToAdd:
         source_name = article['source']['name']
@@ -101,7 +104,6 @@ def main():
             )
     conn.commit()
     conn.close()
-
     return
 
 # returns a comma seperated list of domains to be included for each category's search
