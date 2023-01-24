@@ -12,6 +12,7 @@ class Article(db.Model):
     url = db.Column(db.String(255))
     image_url = db.Column(db.String(255))
     summary = db.Column(db.String(255))
+    category = db.Column(db.String(255))
 
     def to_dict(self):
         return {
@@ -23,5 +24,6 @@ class Article(db.Model):
             'retrieval_date': self.retrieval_date,
             'url': self.url,
             'image_url': self.image_url,
-            'summary': self.summary
+            'summary': self.summary,
+            'category': self.category
         }
