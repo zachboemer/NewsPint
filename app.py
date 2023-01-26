@@ -35,7 +35,7 @@ def get_articles():
 
 @app.route('/pint-of-day/<date>', methods=['GET'])
 @app.route('/pint-of-day/', methods=['GET'])
-def get_pint_of_day(date=datetime.now().strftime('%Y-%m-%d')):
+def get_pint_of_day(date=datetime.now(central).strftime('%Y-%m-%d')):
     if not is_valid_date(date):
         return jsonify({'error': 'Invalid date format. Please use YYYY-MM-DD.'}), 400
 
