@@ -41,7 +41,8 @@ def get_pint_of_day(date=datetime.now().strftime('%Y-%m-%d')):
     today = datetime.now()
     currentTime = datetime.now()
     yesterday = (today - timedelta(days=1)).strftime('%Y-%m-%d')
-
+    print('date: ', date)
+    print('today: ', today)
     # checks to see if you wanted today's results and that its after 5 PM
     if currentTime.hour < 17 and date is today:
         articles = Article.query.filter(Article.retrieval_date == yesterday)
@@ -59,6 +60,7 @@ def is_valid_date(date_string):
         return True
     except ValueError:
         return False
+
 
 if __name__ == '__main__':
     app.run()
