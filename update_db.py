@@ -1,6 +1,6 @@
 import os
 import psycopg2
-
+import pytz
 from dotenv import load_dotenv
 from newsapi import NewsApiClient
 from datetime import datetime, time, timedelta
@@ -17,6 +17,9 @@ def main():
     # setting up connection to our DB
     db_url = os.environ['DATABASE_URL']
     conn = psycopg2.connect(db_url, sslmode='require')
+
+    # timezone
+    central = pytz.timezone('US/Central')
 
     # declare empty arrays
     articlesToAdd = []

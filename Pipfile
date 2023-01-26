@@ -12,6 +12,7 @@ newsapi-python = "*"
 sqlalchemy = "*"
 psycopg2-binary = "*"
 flask-cors = "*"
+pytz = "*"
 
 [dev-packages]
 
