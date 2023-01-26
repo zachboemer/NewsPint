@@ -1,5 +1,6 @@
 import os
 import psycopg2
+import pytz
 from dotenv import load_dotenv
 from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
@@ -15,7 +16,7 @@ db.init_app(app)
 # do some cors
 CORS(app)
 
-
+central = pytz.timezone('US/Central')
 # do some jwt
 
 # -------- ROUTES ---------
@@ -38,13 +39,12 @@ def get_pint_of_day(date=datetime.now().strftime('%Y-%m-%d')):
     if not is_valid_date(date):
         return jsonify({'error': 'Invalid date format. Please use YYYY-MM-DD.'}), 400
 
-    today = datetime.now()
-    currentTime = datetime.now()
+    today = datetime.now(central)
     yesterday = (today - timedelta(days=1)).strftime('%Y-%m-%d')
     print('date: ', date)
     print('today: ', today)
     # checks to see if you wanted today's results and that its after 5 PM
-    if currentTime.hour < 17 and date is today:
+    if today.hour < 17 and date == today.strftime('%Y-%m-%d'):
         articles = Article.query.filter(Article.retrieval_date == yesterday)
     else:
         articles = Article.query.filter(Article.retrieval_date == date)
