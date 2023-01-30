@@ -13,6 +13,7 @@ sqlalchemy = "*"
 psycopg2-binary = "*"
 flask-cors = "*"
 pytz = "*"
+flask-httpauth = "*"
 
 [dev-packages]
 
