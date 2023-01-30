@@ -1,13 +1,17 @@
+from crypt import methods
 import os
 import psycopg2
 import pytz
+import subprocess
 from dotenv import load_dotenv
 from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
 from models import Article, db
 from datetime import datetime, time, timedelta
+from flask_httpauth import HTTPBasicAuth
 
 load_dotenv()
+auth = HTTPBasicAuth()
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL'].replace(
     'postgres://', 'postgresql://', 1)
@@ -22,17 +26,36 @@ central = pytz.timezone('US/Central')
 # -------- ROUTES ---------
 
 # get all articles - this is kinda just for testing, probably gonna remove
+# @app.route('/articles', methods=['GET'])
+# def get_articles():
+#     articles = Article.query.all()
+#     return jsonify([article.to_dict() for article in articles])
 
 
-@app.route('/articles', methods=['GET'])
-def get_articles():
-    articles = Article.query.all()
-    return jsonify([article.to_dict() for article in articles])
+@app.route('/', methods=['GET'])
+def index():
+    return 'welcome to the backend'
+
+# define authentication
+
+
+@auth.get_password
+def get_password(username):
+    if username == os.environ['AUTH_USERNAME']:
+        return os.environ['AUTH_PASSWORD']
+    return None
+
+# requires authentication
+
+
+@app.route('/update-db', methods=['GET'])
+@auth.login_required
+def update_db():
+    result = subprocess.run(["python", "update_db.py"], capture_output=True)
+    return result.stdout
 
 
 # returns the articles associated with the date -- if no date passed in, returns articles with the most recent retrieved_at date
-
-
 @app.route('/pint-of-day/<date>', methods=['GET'])
 @app.route('/pint-of-day/', methods=['GET'])
 def get_pint_of_day(date=datetime.now(central).strftime('%Y-%m-%d')):
