@@ -9,9 +9,9 @@ class Article(db.Model):
     author = db.Column(db.String(255))
     publish_date = db.Column(db.DateTime)
     retrieval_date = db.Column(db.DateTime)
-    url = db.Column(db.String(255))
-    image_url = db.Column(db.String(255))
-    summary = db.Column(db.String(255))
+    url = db.Column(db.Text)
+    image_url = db.Column(db.Text)
+    summary = db.Column(db.Text)
     category = db.Column(db.String(255))
 
     def to_dict(self):
