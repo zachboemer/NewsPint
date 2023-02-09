@@ -27,11 +27,12 @@ def main():
 
     # no science category because the articles are low quality
     categoryDomains = {
-        'technology': '',
+
         'business': '',
         'entertainment': '',
         'sports': '',
-        'health': ''
+        'health': '',
+        'technology': '',
     }
     # categories = ['technology', 'business',
     #               'entertainment', 'sports', 'health']
