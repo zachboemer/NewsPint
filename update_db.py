@@ -75,10 +75,10 @@ def main():
             #         break
             # if sourceAlreadyAdded:
             #     continue
-            if len(article['description']) < 256:
-                article['category'] = category
-                articlesToAdd.append(article)
-                numOfArticlesAddedOfCategory += 1
+            # if len(article['description']) < 256:
+            article['category'] = category
+            articlesToAdd.append(article)
+            numOfArticlesAddedOfCategory += 1
 
     for query in queries:
         response = newsapi.get_everything(
@@ -93,10 +93,10 @@ def main():
         for article in response['articles']:
             if numOfArticlesAdded == 2:
                 break
-            if len(article['description']) < 256:
-                article['category'] = query
-                articlesToAdd.append(article)
-                numOfArticlesAdded += 1
+            # if len(article['description']) < 256:
+            article['category'] = query
+            articlesToAdd.append(article)
+            numOfArticlesAdded += 1
 
     # traverse through articlesToAdd, and then insert one by one into articles table
     for article in articlesToAdd:
@@ -109,7 +109,7 @@ def main():
         image_url = article['urlToImage']
         summary = article['description']
         category = article['category']
-        print('***** attempting to add article: ', title, ' *****')
+        # print('***** attempting to add article: ', article, ' *****')
         with conn.cursor() as cur:
             cur.execute(
                 "INSERT INTO articles (source_name, title, author, publish_date, retrieval_date, url, image_url, summary, category) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)",
