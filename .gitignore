@@ -3,3 +3,4 @@
 .vscode
 __pycache__
 .idea
+database_upload.log
