@@ -1,12 +1,16 @@
 import os
 import psycopg2
 import pytz
+import logging
 from dotenv import load_dotenv
 from newsapi import NewsApiClient
 from datetime import datetime, time, timedelta
 
 
 def main():
+
+    # logging
+    logging.basicConfig(filename='database_upload.log', level=logging.INFO, format='%(asctime)s:%(levelname)s:%(message)s')
 
     # loads .env variables
     load_dotenv()
@@ -100,26 +104,30 @@ def main():
             numOfArticlesAdded += 1
 
     # traverse through articlesToAdd, and then insert one by one into articles table
-    for article in articlesToAdd:
-        source_name = article['source']['name']
-        title = article['title']
-        author = article['author']
-        publish_date = article['publishedAt']
-        retrieval_date = formattedTodayDatetime
-        url = article['url']
-        image_url = article['urlToImage']
-        summary = article['description']
-        category = article['category']
-        # print('***** attempting to add article: ', article, ' *****')
-        with conn.cursor() as cur:
-            cur.execute(
-                "INSERT INTO articles (source_name, title, author, publish_date, retrieval_date, url, image_url, summary, category) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)",
+    try:
+        for article in articlesToAdd:
+            source_name = article['source']['name']
+            title = article['title']
+            author = article['author']
+            publish_date = article['publishedAt']
+            retrieval_date = formattedTodayDatetime
+            url = article['url']
+            image_url = article['urlToImage']
+            summary = article['description']
+            category = article['category']
+            # print('***** attempting to add article: ', article, ' *****')
+            with conn.cursor() as cur:
+                cur.execute(
+                    "INSERT INTO articles (source_name, title, author, publish_date, retrieval_date, url, image_url, summary, category) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)",
 
-                (source_name, title, author, publish_date,
-                    retrieval_date, url, image_url, summary, category)
-            )
-    conn.commit()
-    conn.close()
+                    (source_name, title, author, publish_date,
+                        retrieval_date, url, image_url, summary, category)
+                )
+        conn.commit()
+        conn.close()
+        logging.info('Database upload successful.')
+    except Exception as e:
+        logging.error('Error uploading to database: {}'.format(str(e)))
     return
 
 # returns a comma seperated list of domains to be included for each category's search
