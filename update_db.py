@@ -43,7 +43,7 @@ def main():
     queries = ['esports', 'politics', 'ukraine']
 
     # to param
-    today = datetime.today()
+    today = datetime.now(central)
     targetTime = time(hour=17)
     todayDatetime = datetime.combine(today, targetTime)
     formattedTodayDatetime = todayDatetime.isoformat()
@@ -108,6 +108,7 @@ def main():
         for article in articlesToAdd:
             source_name = article['source']['name']
             title = article['title']
+            print(title)    # for debugging purposes
             author = article['author']
             publish_date = article['publishedAt']
             retrieval_date = formattedTodayDatetime
