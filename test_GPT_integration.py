@@ -15,7 +15,7 @@ def test():
     newsapi = NewsApiClient(api_key=api_key)
 
     #create blank array
-    articles_to_add = []
+    article_titles = []
 
     # timezone
     central = pytz.timezone('US/Central')
@@ -44,10 +44,22 @@ def test():
                                         to=formattedTodayDatetime,
                                         language='en',
                                         sort_by='popularity',
-                                        page_size=10,
+                                        page_size=100,
                                         page=1)
     
-    return response
+    #Gets a list of all of the titles from the response
+    titles = [article['title'] for article in response['articles']]
+    #makes a blank title dictionary
+    title_list = {}
+    #makes a dictionary where each article has a unquie value we can put into the GPT prompt (being index+1)
+    #the idea is to use this in a prompt like "Classify the articless in this dictionary has one of the following subjects:...
+    #return a dictionary that is the articles' number and it's classification
+
+    #! we need to eliminate similar articles before we sort this to eliminate tokens
+    for index, title in enumerate(titles):
+        title_list.update({index+1:title})
+
+    return title_list
 
 #prints results
 result = test()
