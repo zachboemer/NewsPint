@@ -27,7 +27,7 @@ def test():
     formattedTodayDatetime = todayDatetime.isoformat()
 
     # from param
-    yesterdayDatetime = todayDatetime - timedelta(days=1)
+    yesterdayDatetime = todayDatetime - timedelta(days=2)  #i need to change this to 1 day
     formattedYesterdayDatetime = yesterdayDatetime.isoformat()
 
     #imports the search domains from the csv file
@@ -37,14 +37,14 @@ def test():
     search_domains_str = ",".join(search_domains)
 
     #does the actual request to news API
-    response = newsapi.get_everything(q='us',
+    response = newsapi.get_everything(q='',
                                         sources='',
                                         domains=search_domains_str,
                                         from_param=formattedYesterdayDatetime,
                                         to=formattedTodayDatetime,
                                         language='en',
                                         sort_by='popularity',
-                                        page_size=100,
+                                        page_size=100, #i have this at 20 rn for testing
                                         page=1)
     
     #Gets a list of all of the titles from the response
@@ -59,7 +59,14 @@ def test():
     for index, title in enumerate(titles):
         title_list.update({index+1:title})
 
-    return title_list
+    #first test of GPT prompt. It works great when you pass 20 articles in, but when you pass 100, it just lists the article titles again.
+    prompt = '''Below is a list of article titles. Determine which of the following categories each article title best fits: Business, \
+    Entertainment, Sports, Health, Technology, Esports, Politics, or Ukraine. Return a list of the same format with your \
+    categorizations, e.g., [Business, Business, Sports]. If a title doesn't fit well into any category, use the category \
+    "Other ." Only return categories with the exact spelling I gave.
+    '''
+
+    return titles
 
 #prints results
 result = test()
